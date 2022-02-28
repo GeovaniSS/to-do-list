@@ -57,6 +57,14 @@ section#create-task .new-task > input:focus {
     border: 2px solid #5593da;
 }
 
+section#create-task .new-task > input.error {
+    border: 2px solid red;
+}
+
+section#create-task .new-task > input.error::placeholder {
+    color: red;
+}
+
 /*########### CREATE TASK BUTTON ###########*/
 section#create-task .new-task > button {
     font-family: 'Poppins';
@@ -85,7 +93,7 @@ section#task-preview {
 }
 
 /* ############ TASK CONTROL ##############*/
-section#task-preview .task-control {
+section#task-preview .task-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -95,7 +103,7 @@ section#task-preview .task-control {
 }
 
 /* ############ TASK CONTROL BUTTONS ##############*/
-section#task-preview .task-control > button {
+section#task-preview .task-container > span {
     cursor: pointer;
     border: 0;
     border-radius: 4px;
@@ -105,6 +113,16 @@ section#task-preview .task-control > button {
     margin-left: 5px;
 }
 
-section#task-preview .task-control > button:hover {
+section#task-preview .task-container > span:hover {
     background-color: #4d99f0;
+}
+
+/*-------------- CONFIRM TASK --------------*/
+section#task-preview .task-container > p {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+section#task-preview .task-container > p.confirm-task {
+    text-decoration: line-through;
 }
