@@ -5,19 +5,37 @@
 	- 4° ***Salvar tarefas com localStorage***
  
 ###Validar Input### (OK)
-	- Se o input estiver vazio, adicionar uma classe error
-	- Error (Borda vermelha e Placeholder Vermelho)
-	- Se o input deixar de ser vazio, remover a classe error com o evento de change()
+	- Se o input estiver vazio, adicionar uma classe error (OK)
+	- Error (Borda vermelha e Placeholder Vermelho) (OK)
+	- Se o input deixar de ser vazio, remover a classe error com o evento de focus
+	(OK)
 
 ###Criar Tarefas### (OK)
-	- Criar os elementos pelo JavaScript 
-	- Div, p e o ícone 
-	- Evento de clicar no botão adicionar
-	- Evento de clicar no enter ***
+	- Criar os elementos pelo JavaScript (OK)
+	- Div, p e o ícone (OK)
+	- Evento de clicar no botão adicionar (OK)
+	- Evento de clicar no enter (OK)
+
+###Concluir Tarefas###
+	- 1° Forma 
+		- Criar NodeLists com os tasksContent usando o querySelectorAll()
+		- Usando o forEach para percorrer os tasksContent e adicionar um eventListener de click 
+	- 2° Forma 
+		- Criar um eventListener de Click depois que o tasksContent for criado 
+		- Usar os métodos do DOM para encontrar o tasksContent que foi clicado
 
 ###Apagar Tarefas###
-	- Dentro da função que os items são criados, criar uma variável que vai armazenar a NodeList das divs e a NodeList dos botões
-	- Criar um forEach para percorrer esses elementos e adicionar o evento de click nos botões 
+	- 1° Forma 
+		- Criar NodeLists com os deleteItems usando o querySelectorAll()
+		- Usando o forEach para percorrer os deleteItems e adicionar um eventListener de click 
+	- 2° Forma 
+		- Criar um eventListener de Click depois que o deleteItem for criado 
+		- Usar os métodos do DOM para encontrar o deleteItem que foi clicado
+
+### localStorage ###
+	- Utilizar o localStorage para armazenar as tarefas que o usuário adicionou no armazenamento local do browser. 
+	- Sempre que uma tarefa for adicionada no html, também iremos adicionar no localStorage -> setItem()
+	- Sempre que uma tarefa for removida da página, também iremos remover do localStorage -> removeItem()
 
 ### ATENÇÃO ###
 	- Eu estava errando na manipulação do DOM
@@ -28,8 +46,10 @@
 
 ## APRENDIZADOS ##
 	- Método trim() nas strings
-	- O addEventListener pode trazer problemas
+	- O addEventListener pode trazer problemas com a adição e remoção de classes
 	- parentNode / parentNode.remove()
+	- childNodes, firstChild, lastChild
+	- localStorage
 
 <div class="task-control">
 	<p>Ir na central de transporte do BRB</p>

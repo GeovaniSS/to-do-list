@@ -1,31 +1,74 @@
-const inputTarefa = document.querySelector('#input-tarefa')
-const botãoAdicionarTarefa = document.querySelector('#adicionar-tarefa')
-//let buttons;
-//let tarefas;
+const inputTask = document.querySelector('.new-task-input')
+const addTaskButton = document.querySelector('.new-task-button')
+const tasksContainer = document.querySelector('.tasks-container')
 
-botãoAdicionarTarefa.addEventListener('click', () => {
-    if (inputTarefa.value === '') {
-        window.alert('Adicione um tarefa')
+const handleAddNewTask = () => {
+    const inputTaskIsValid = validateInputTask()
+    
+    if(!inputTaskIsValid){
+        inputTask.classList.add('error')
+        return
     }
-    else {   
-        const listaDeTarefas = document.querySelector('.tarefas')
 
-        listaDeTarefas.innerHTML += `
-            <div class="task-control">
-                <p>${inputTarefa.value}</p>
-                <button class='delete'><span class="material-icons">delete</span></button>
-            </div>
-        `
+    /* Criação da Div que engloba os items*/
+    const taskItemContainer = document.createElement('div')
+    taskItemContainer.classList.add('task-container')
 
-        const tarefas = document.querySelectorAll('.task-control')
-        const buttons = document.querySelectorAll('.delete')
+    /* Criação do Parágrafo*/
+    const taskContent = document.createElement('p')
+    taskContent.innerText = inputTask.value
 
-        buttons.forEach((el, i) => {
-            el.addEventListener('click', () => {
-                listaDeTarefas.removeChild(tarefas[i])
-                //el.parentNode.remove()
-            })
+    /* Criação do Ícone da Lixeira */
+    const deleteItem = document.createElement('span')
+    deleteItem.classList.add('material-icons')
+    deleteItem.innerText = 'delete'
+
+    taskItemContainer.appendChild(taskContent)
+    taskItemContainer.appendChild(deleteItem)
+    tasksContainer.appendChild(taskItemContainer)
+
+    /*Limpando Input ao adicionar uma tarefa*/
+    inputTask.value = ''
+    inputTask.focus()
+
+    const tasksContent = document.querySelectorAll('.task-container p')
+    const deleteItems = document.querySelectorAll('.task-container span')
+    completeTasks(tasksContent)
+    deleteTasks(deleteItems)
+}
+
+const validateInputTask = () => {
+    return inputTask.value.trim().length > 0
+}
+
+const handleInputTaskFocus = () => {
+    inputTask.classList.remove('error')
+    inputTask.value = ''
+}
+
+const completeTasks = (tasksContent) => { 
+    tasksContent.forEach((el) => {
+        el.onclick = () => { 
+            el.classList.toggle('confirm-task')
+        }
+    })
+}
+
+const deleteTasks = (deleteItems) => {
+    deleteItems.forEach((el) => {
+        el.addEventListener('click', () => {
+            el.parentNode.remove() //Remove o Elemento Pai (task-container)
         })
+    })
+}
+
+
+addTaskButton.addEventListener('click', handleAddNewTask)
+inputTask.addEventListener('focus', handleInputTaskFocus)
+inputTask.addEventListener('keydown', (e) => {
+    if (e.keyCode === 13) {
+        handleAddNewTask()
+        return
     }
 })
 

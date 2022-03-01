@@ -3,83 +3,101 @@ const addTaskButton = document.querySelector('.new-task-button')
 const tasksContainer = document.querySelector('.tasks-container')
 
 const handleAddNewTask = () => {
-    if(!validInputTask()){
+    const inputTaskIsValid = validateInputTask()
+    
+    if(!inputTaskIsValid){
         inputTask.classList.add('error')
         return
     }
 
     /* Criação da Div que engloba os items*/
-    const taskContainer = document.createElement('div')
-    taskContainer.classList.add('task-container')
+    const taskItemContainer = document.createElement('div')
+    taskItemContainer.classList.add('task-container')
 
     /* Criação do Parágrafo*/
     const taskContent = document.createElement('p')
     taskContent.innerText = inputTask.value
 
-    /* Criação do Ícone da Lixeira */
-    const taskDeleteIcon = document.createElement('span')
-    taskDeleteIcon.classList.add('material-icons')
-    taskDeleteIcon.innerText = 'delete'
+    /* Evento de Click no parágrafo */
+    taskContent.addEventListener('click', () => handleCompleteTask(taskContent))
 
-    taskContainer.appendChild(taskContent)
-    taskContainer.appendChild(taskDeleteIcon)
-    tasksContainer.appendChild(taskContainer)
+    /* Criação do Ícone da Lixeira */
+    const deleteItem = document.createElement('span')
+    deleteItem.classList.add('material-icons')
+    deleteItem.innerText = 'delete'
+
+    /* Evento de Click no ícone da Lixeira */
+    deleteItem.addEventListener('click', () => removeTaskToLocalStorage(deleteItem))
+    deleteItem.addEventListener('click', () => handleDeleteTask(deleteItem))
+
+    taskItemContainer.appendChild(taskContent)
+    taskItemContainer.appendChild(deleteItem)
+    tasksContainer.appendChild(taskItemContainer)
 
     /*Limpando Input ao adicionar uma tarefa*/
     inputTask.value = ''
     inputTask.focus()
 
-    //const tasks = document.querySelectorAll('.task-container')
-    const tasksContent = document.querySelectorAll('.task-container p')
-    const tasksDeleteIcons = document.querySelectorAll('.task-container span')
-    confirmTasks(tasksContent)
-    removeTasks(tasksDeleteIcons)
+    /* Teste */
+    addTaskToLocalStorage(taskItemContainer)
 }
 
-const validInputTask = () => {
-    return inputTask.value.trim().length !== 0
+const addTaskToLocalStorage = (taskItemContainer) => {
+    const totalItems = tasksContainer.childNodes.length
+
+    for (let i = 0; i < totalItems; i++) {
+        localStorage.setItem('task'.concat(i), taskItemContainer)
+    }
 }
 
-const inputTaskChange = () => {
-    inputTask.classList.remove('error')
-    inputTask.value = ''
-}
+const removeTaskToLocalStorage = (deleteItem) => {
+    const tasks = tasksContainer.childNodes
 
-const confirmTasks = (tasksContent) => { 
-    for (let taskContent of tasksContent) {
-        taskContent.onclick = () => {
-            let confirmTask = taskContent.classList.contains('confirm-task')
-       
-            if (!confirmTask) {
-                taskContent.classList.add('confirm-task')
-                return
-            }
-    
-            taskContent.classList.remove('confirm-task')
+    for (let i in tasks) {
+        const currentTaskIsBeingDeleted = tasks[i].lastChild === deleteItem
+        if (currentTaskIsBeingDeleted) {
+            localStorage.removeItem('task'.concat(i))
         }
     }
 }
 
-const removeTasks = (tasksDeleteIcons) => {
-    tasksDeleteIcons.forEach((el) => {
-        el.addEventListener('click', () => {
-            el.parentNode.remove() //Remove o Elemento Pai (task-container)
-        })
-    })
-
-   /*for (let taskDeleteIcon of tasksDeleteIcons) {
-        taskDeleteIcon.addEventListener('click', (e) => {
-            taskDeleteIcon.parentNode.remove()
-        })
-   }*/
+const validateInputTask = () => {
+    return inputTask.value.trim().length > 0
 }
 
+const handleInputTaskFocus = () => {
+    inputTask.classList.remove('error')
+    inputTask.value = ''
+}
 
-addTaskButton.addEventListener('click', handleAddNewTask)
-inputTask.addEventListener('focus', inputTaskChange)
+const handleCompleteTask = (taskContent) => {
+    const tasks = tasksContainer.childNodes
+
+    for (let task of tasks) {
+        const currentTaskIsBeingClicked = task.firstChild === taskContent
+        if (currentTaskIsBeingClicked) {
+            task.firstChild.classList.toggle('confirm-task')
+        }
+    }
+}   
+
+const handleDeleteTask = (deleteItem) => {
+    const tasks = tasksContainer.childNodes
+
+    for (let task of tasks) {
+        const currentTaskIsBeingDeleted = task.lastChild === deleteItem
+        if (currentTaskIsBeingDeleted) {
+            tasksContainer.removeChild(task)
+        }
+    }
+
+}
+
+addTaskButton.addEventListener('click', () => handleAddNewTask())
+inputTask.addEventListener('focus', () => handleInputTaskFocus())
 inputTask.addEventListener('keydown', (e) => {
-    if (e.keyCode !== 13) {
+    if (e.keyCode === 13) {
+        handleAddNewTask()
         return
     }
-    handleAddNewTask()
 })
