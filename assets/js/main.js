@@ -38,28 +38,40 @@ const handleAddNewTask = () => {
     inputTask.value = ''
     inputTask.focus()
 
-    /* Teste */
-    addTaskToLocalStorage(taskItemContainer)
+    /* Adicionar tarefa ao LocalStorage */
+    //addTaskToLocalStorage()
 }
 
-const addTaskToLocalStorage = (taskItemContainer) => {
-    const totalItems = tasksContainer.childNodes.length
+const addTaskToLocalStorage = () => {
+    const tasks = tasksContainer.childNodes
 
-    for (let i = 0; i < totalItems; i++) {
-        localStorage.setItem('task'.concat(i), taskItemContainer)
+    for (let task of tasks) {
+        const key = task.firstChild.innerText
+        localStorage.setItem(key, task.parentNode.innerHTML.toString())
     }
 }
 
 const removeTaskToLocalStorage = (deleteItem) => {
     const tasks = tasksContainer.childNodes
 
-    for (let i in tasks) {
-        const currentTaskIsBeingDeleted = tasks[i].lastChild === deleteItem
+    for (let task of tasks) {
+        const currentTaskIsBeingDeleted = task.lastChild === deleteItem
         if (currentTaskIsBeingDeleted) {
-            localStorage.removeItem('task'.concat(i))
+            const key = task.firstChild.innerText
+            localStorage.removeItem(key)
         }
     }
 }
+
+const loadTasksFromLocalStorage = () => {    
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i)
+        let value = localStorage.getItem(key)
+       
+        tasksContainer.innerHTML = value
+    }
+}
+
 
 const validateInputTask = () => {
     return inputTask.value.trim().length > 0
@@ -76,7 +88,7 @@ const handleCompleteTask = (taskContent) => {
     for (let task of tasks) {
         const currentTaskIsBeingClicked = task.firstChild === taskContent
         if (currentTaskIsBeingClicked) {
-            task.firstChild.classList.toggle('confirm-task')
+            task.firstChild.classList.toggle('complete-task')
         }
     }
 }   
@@ -94,6 +106,7 @@ const handleDeleteTask = (deleteItem) => {
 }
 
 addTaskButton.addEventListener('click', () => handleAddNewTask())
+addTaskButton.addEventListener('click', () => addTaskToLocalStorage())
 inputTask.addEventListener('focus', () => handleInputTaskFocus())
 inputTask.addEventListener('keydown', (e) => {
     if (e.keyCode === 13) {
@@ -101,3 +114,5 @@ inputTask.addEventListener('keydown', (e) => {
         return
     }
 })
+
+loadTasksFromLocalStorage()

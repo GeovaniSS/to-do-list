@@ -123,6 +123,6 @@ section#task-preview .task-container > p {
     text-decoration: none;
 }
 
-section#task-preview .task-container > p.confirm-task {
+section#task-preview .task-container > p.complete-task {
     text-decoration: line-through;
 }
