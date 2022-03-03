@@ -2,7 +2,7 @@
 	- 1° Validar input - (OK)
 	- 2° Criar tarefas - (OK)
 	- 3° Apagar tarefas - (OK)
-	- 4° ***Salvar tarefas com localStorage***
+	- 4° Salvar tarefas com localStorage (OK)
  
 ###Validar Input### (OK)
 	- Se o input estiver vazio, adicionar uma classe error (OK)
@@ -49,6 +49,7 @@
 	- O addEventListener pode trazer problemas com a adição e remoção de classes
 	- parentNode / parentNode.remove()
 	- childNodes, firstChild, lastChild
+	- isSameNode(), nextSibling
 	- localStorage
 
 <div class="task-control">
@@ -57,9 +58,4 @@
 		<button id="change-task"><span class="material-icons">edit</span></button>
 		<button id="remove-task"><span class="material-icons">delete</span></button>
 	</div>
-</div>
-
-<div class="task-control">
-	<p>Ir na central de transporte do BRB</p>
-	<button id="remove-task"><span class="material-icons">delete</span></button>
 </div>

@@ -2,42 +2,6 @@ const inputTask = document.querySelector('.new-task-input')
 const addTaskButton = document.querySelector('.new-task-button')
 const tasksContainer = document.querySelector('.tasks-container')
 
-const loadTasksFromLocalStorage = () => {    
-    for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i)
-        let value = localStorage.getItem(key)
-
-        const taskValue = JSON.parse(value)
-       
-        /* Criação da Div que engloba os items*/
-        const taskItemContainer = document.createElement('div')
-        taskItemContainer.classList.add('task-container')
-
-        /* Criação do Parágrafo*/
-        const taskContent = document.createElement('p')
-        taskContent.innerText = taskValue.content
-        if (taskValue.isCompleted) {
-            taskContent.classList.add('complete-task')
-        }
-
-        /* Evento de Click no parágrafo */
-        taskContent.addEventListener('click', () => handleCompleteTask(taskContent))
-
-        /* Criação do Ícone da Lixeira */
-        const deleteItem = document.createElement('span')
-        deleteItem.classList.add('material-icons')
-        deleteItem.innerText = 'delete'
-
-        /* Evento de Click no ícone da Lixeira */
-        deleteItem.addEventListener('click', () => removeTaskToLocalStorage(deleteItem))
-        deleteItem.addEventListener('click', () => handleDeleteTask(deleteItem))
-
-        taskItemContainer.appendChild(taskContent)
-        taskItemContainer.appendChild(deleteItem)
-        tasksContainer.appendChild(taskItemContainer)
-    }
-}
-
 const handleAddNewTask = () => {
     const inputTaskIsValid = validateInputTask()
     
@@ -63,7 +27,6 @@ const handleAddNewTask = () => {
     deleteItem.innerText = 'delete'
 
     /* Evento de Click no ícone da Lixeira */
-    deleteItem.addEventListener('click', () => removeTaskToLocalStorage(deleteItem))
     deleteItem.addEventListener('click', () => handleDeleteTask(deleteItem))
 
     taskItemContainer.appendChild(taskContent)
@@ -75,15 +38,37 @@ const handleAddNewTask = () => {
     inputTask.focus()
 
     /* Adicionar tarefa ao LocalStorage */
-    addTaskToLocalStorage(taskContent)
+    addTaskToLocalStorage()
 }
 
-const addTaskToLocalStorage = (taskContent) => {
-    const isCompleted = taskContent.classList.contains('complete-task')
-    const task = {content: taskContent.innerHTML, isCompleted}
-    
-    const key = taskContent.innerText
-    localStorage.setItem(key, JSON.stringify(task))
+const addTaskToLocalStorage = () => {
+    const tasks = tasksContainer.childNodes
+
+    for (let task of tasks) {
+        const key = task.firstChild.innerText
+        localStorage.setItem(key, task.parentNode.innerHTML.toString())
+    }
+}
+
+const removeTaskToLocalStorage = (deleteItem) => {
+    const tasks = tasksContainer.childNodes
+
+    for (let task of tasks) {
+        const currentTaskIsBeingDeleted = task.lastChild.isSameNode(deleteItem)
+        if (currentTaskIsBeingDeleted) {
+            const key = task.firstChild.innerText
+            localStorage.removeItem(key)
+        }
+    }
+}
+
+const loadTasksFromLocalStorage = () => {    
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i)
+        let value = localStorage.getItem(key)
+       
+        tasksContainer.innerHTML = value
+    }
 }
 
 const validateInputTask = () => {
@@ -104,8 +89,6 @@ const handleCompleteTask = (taskContent) => {
             task.firstChild.classList.toggle('complete-task')
         }
     }
-
-    addTaskToLocalStorage(taskContent)
 }   
 
 const handleDeleteTask = (deleteItem) => {
@@ -118,19 +101,7 @@ const handleDeleteTask = (deleteItem) => {
         }
     }
 
-    removeTaskToLocalStorage(deleteItem)
-}
-
-const removeTaskToLocalStorage = (deleteItem) => {
-    const tasks = tasksContainer.childNodes
-
-    for (let task of tasks) {
-        const currentTaskIsBeingDeleted = task.lastChild.isSameNode(deleteItem)
-        if (currentTaskIsBeingDeleted) {
-            const key = task.firstChild.innerText
-            localStorage.removeItem(key)
-        }
-    }
+    removeTaskToLocalStorage()
 }
 
 loadTasksFromLocalStorage()

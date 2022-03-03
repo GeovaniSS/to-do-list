@@ -62,7 +62,6 @@ const deleteTasks = (deleteItems) => {
     })
 }
 
-
 addTaskButton.addEventListener('click', handleAddNewTask)
 inputTask.addEventListener('focus', handleInputTaskFocus)
 inputTask.addEventListener('keydown', (e) => {
