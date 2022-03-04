@@ -59,10 +59,9 @@ div.new-task-container {
 
 /*---------- NEW TASK BUTTON ----------*/
 .new-task-container > button {
-    cursor: pointer;
     font-family: 'Poppins';
     font-weight: 500;
-    background-color: #5593da;
+    background-color: #2196F3;
     border-radius: 4px;
     color: #fff;
     border: 0;
@@ -70,7 +69,7 @@ div.new-task-container {
 }
 
 .new-task-container > button:hover {
-    background-color: #4d95e9;
+    background-color: #2972c5
 }
 
 /*---------- TASKS CONTAINER ----------*/
@@ -85,39 +84,130 @@ div.new-task-container {
 }
 
 /*---------- TASK ITEM CONTAINER ----------*/
-.tasks-container > .task-container {
+.tasks-container > .task-item-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0.5rem 0 0.5rem 1rem;
+    padding: 0.5rem;
     border-bottom: 2px solid #dddada;
 }
 
-/*---------- DELETE ITEM ----------*/
-.task-container > span {
-    cursor: pointer;
-    border: 0;
-    border-radius: 4px;
-    background-color: #5593da;
-    color: #fff;
-    padding: 0.3rem 0.4rem;
-    margin-left: 5px;
+.task-item-container > .task-item-content {
+    display: flex;
+    align-items: center;
 }
 
-.task-container > span:hover {
-    background-color: #4d99f0;
+.task-item-content > input {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
 /*-------------- COMPLETE TASKS --------------*/
-.task-container > p {
+.task-item-content  > label {
     cursor: pointer;
     text-decoration: none;
 }
 
-.task-container > p.complete-task {
+.task-item-content  > label.completed {
     text-decoration: line-through;
-    text-decoration-color: #1c579b;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #2196F3;
+}
+
+/*---------- TASK ITEM CONTROLS ----------*/
+.task-item-controls {
+    display: flex;
+    align-items: center;
+}
+
+/*---------- DELETE ITEM ----------*/
+.task-item-controls > span {
+    cursor: pointer;
+    border: 0;
+    border-radius: 4px;
+    background-color: #2196F3;
+    color: #fff;
+    padding: 0.2rem;
+    margin-left: 5px;
+}
+
+.task-item-controls > span:hover {
+    background-color: #2972c5;
+}
+
+/*---------- EDIT TASK CONTAINER ----------*/
+section#modal-container {
+    display: none;
+}
+
+.edit-task-modal {
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-width: 300px;
+    min-height: 200px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.edit-task-modal .edit-task > label {
+    font-size: 0.9rem;
+}
+
+.edit-task-modal .edit-task > input  {
+    font-family: 'Poppins';
+    font-size: 0.9rem;
+    border: 2px solid #BABABA;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+}
+
+.edit-task-modal .edit-task > input:focus {
+    border: 2px solid #5593da;
+}
+
+.edit-task-modal > button {
+    cursor: pointer;
+    font-family: 'Poppins';
+    font-weight: 500;
+    background-color: #5593da;
+    border-radius: 4px;
+    color: #fff;
+    border: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.edit-task-modal > button:hover {
+    background-color: #4d95e9;
+}
+
+.edit-task-modal > span {
+    cursor: pointer;
+    position: absolute;
+    top: -12px;
+    right: -6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #5593da;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.edit-task-modal > span:hover {
+    background-color: #4f9df7;
 }
 
 @media screen and (max-width: 450px) {
