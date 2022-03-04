@@ -2,21 +2,18 @@ const inputTask = document.querySelector('.new-task-input')
 const addTaskButton = document.querySelector('.new-task-button')
 const tasksContainer = document.querySelector('.tasks-container')
 
-const loadTasksFromLocalStorage = () => {    
-    for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i)
-        let value = localStorage.getItem(key)
-
-        const taskValue = JSON.parse(value)
-       
+const loadTasksFromLocalStorage = () => {
+    const localStorageTasks = JSON.parse(localStorage.getItem('tasks'))
+    
+    for (let task of localStorageTasks) {
         /* Criação da Div que engloba os items*/
         const taskItemContainer = document.createElement('div')
         taskItemContainer.classList.add('task-container')
 
         /* Criação do Parágrafo*/
         const taskContent = document.createElement('p')
-        taskContent.innerText = taskValue.content
-        if (taskValue.isCompleted) {
+        taskContent.innerText = task.content
+        if (task.isCompleted) {
             taskContent.classList.add('complete-task')
         }
 
@@ -27,9 +24,8 @@ const loadTasksFromLocalStorage = () => {
         const deleteItem = document.createElement('span')
         deleteItem.classList.add('material-icons')
         deleteItem.innerText = 'delete'
-
+        
         /* Evento de Click no ícone da Lixeira */
-        deleteItem.addEventListener('click', () => removeTaskToLocalStorage(deleteItem))
         deleteItem.addEventListener('click', () => handleDeleteTask(deleteItem))
 
         taskItemContainer.appendChild(taskContent)
@@ -63,7 +59,6 @@ const handleAddNewTask = () => {
     deleteItem.innerText = 'delete'
 
     /* Evento de Click no ícone da Lixeira */
-    deleteItem.addEventListener('click', () => removeTaskToLocalStorage(deleteItem))
     deleteItem.addEventListener('click', () => handleDeleteTask(deleteItem))
 
     taskItemContainer.appendChild(taskContent)
@@ -75,15 +70,7 @@ const handleAddNewTask = () => {
     inputTask.focus()
 
     /* Adicionar tarefa ao LocalStorage */
-    addTaskToLocalStorage(taskContent)
-}
-
-const addTaskToLocalStorage = (taskContent) => {
-    const isCompleted = taskContent.classList.contains('complete-task')
-    const task = {content: taskContent.innerHTML, isCompleted}
-    
-    const key = taskContent.innerText
-    localStorage.setItem(key, JSON.stringify(task))
+    uptadeTasksFromLocalStorage()
 }
 
 const validateInputTask = () => {
@@ -99,38 +86,39 @@ const handleCompleteTask = (taskContent) => {
     const tasks = tasksContainer.childNodes
 
     for (let task of tasks) {
-        const currentTaskIsBeingClicked = task.firstChild.isSameNode(taskContent)
+        const currentTaskIsBeingClicked = task.firstChild === taskContent
         if (currentTaskIsBeingClicked) {
             task.firstChild.classList.toggle('complete-task')
         }
     }
 
-    addTaskToLocalStorage(taskContent)
+    uptadeTasksFromLocalStorage()
 }   
 
 const handleDeleteTask = (deleteItem) => {
     const tasks = tasksContainer.childNodes
 
     for (let task of tasks) {
-        const currentTaskIsBeingDeleted = task.lastChild.isSameNode(deleteItem)
+        const currentTaskIsBeingDeleted = task.lastChild === deleteItem
         if (currentTaskIsBeingDeleted) {
             tasksContainer.removeChild(task)
         }
     }
 
-    removeTaskToLocalStorage(deleteItem)
+    uptadeTasksFromLocalStorage()
 }
 
-const removeTaskToLocalStorage = (deleteItem) => {
+const uptadeTasksFromLocalStorage = () => {
     const tasks = tasksContainer.childNodes
+    const tasksList = []
 
     for (let task of tasks) {
-        const currentTaskIsBeingDeleted = task.lastChild.isSameNode(deleteItem)
-        if (currentTaskIsBeingDeleted) {
-            const key = task.firstChild.innerText
-            localStorage.removeItem(key)
-        }
+        const isCompleted = task.firstChild.classList.contains('complete-task')
+        const taskItem = {content: task.firstChild.innerText, isCompleted}
+        tasksList.push(taskItem)
     }
+
+    localStorage.setItem('tasks', JSON.stringify(tasksList))
 }
 
 loadTasksFromLocalStorage()
