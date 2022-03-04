@@ -4,7 +4,9 @@ const tasksContainer = document.querySelector('.tasks-container')
 
 const loadTasksFromLocalStorage = () => {
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'))
-    
+
+    if (!localStorageTasks) return
+
     for (let task of localStorageTasks) {
         /* Criação da Div que engloba os items*/
         const taskItemContainer = document.createElement('div')
@@ -13,9 +15,8 @@ const loadTasksFromLocalStorage = () => {
         /* Criação do Parágrafo*/
         const taskContent = document.createElement('p')
         taskContent.innerText = task.content
-        if (task.isCompleted) {
-            taskContent.classList.add('complete-task')
-        }
+        if (task.isCompleted) taskContent.classList.add('complete-task')
+        
 
         /* Evento de Click no parágrafo */
         taskContent.addEventListener('click', () => handleCompleteTask(taskContent))
@@ -26,7 +27,7 @@ const loadTasksFromLocalStorage = () => {
         deleteItem.innerText = 'delete'
         
         /* Evento de Click no ícone da Lixeira */
-        deleteItem.addEventListener('click', () => handleDeleteTask(deleteItem))
+        deleteItem.addEventListener('click', () => handleDeleteTask(taskContent))
 
         taskItemContainer.appendChild(taskContent)
         taskItemContainer.appendChild(deleteItem)
@@ -38,8 +39,7 @@ const handleAddNewTask = () => {
     const inputTaskIsValid = validateInputTask()
     
     if(!inputTaskIsValid){
-        inputTask.classList.add('error')
-        return
+        return inputTask.classList.add('error')
     }
 
     /* Criação da Div que engloba os items*/
@@ -59,10 +59,11 @@ const handleAddNewTask = () => {
     deleteItem.innerText = 'delete'
 
     /* Evento de Click no ícone da Lixeira */
-    deleteItem.addEventListener('click', () => handleDeleteTask(deleteItem))
+    deleteItem.addEventListener('click', () => handleDeleteTask(taskContent))
 
     taskItemContainer.appendChild(taskContent)
     taskItemContainer.appendChild(deleteItem)
+
     tasksContainer.appendChild(taskItemContainer)
 
     /*Limpando Input ao adicionar uma tarefa*/
@@ -73,9 +74,8 @@ const handleAddNewTask = () => {
     uptadeTasksFromLocalStorage()
 }
 
-const validateInputTask = () => {
-    return inputTask.value.trim().length > 0
-}
+const validateInputTask = () => inputTask.value.trim().length > 0
+
 
 const handleInputTaskFocus = () => {
     inputTask.classList.remove('error')
@@ -95,12 +95,12 @@ const handleCompleteTask = (taskContent) => {
     uptadeTasksFromLocalStorage()
 }   
 
-const handleDeleteTask = (deleteItem) => {
+const handleDeleteTask = (taskContent) => {
     const tasks = tasksContainer.childNodes
 
     for (let task of tasks) {
-        const currentTaskIsBeingDeleted = task.lastChild === deleteItem
-        if (currentTaskIsBeingDeleted) {
+        const currentTaskIsBeingClicked = task.firstChild === taskContent
+        if (currentTaskIsBeingClicked) {
             tasksContainer.removeChild(task)
         }
     }
@@ -113,8 +113,9 @@ const uptadeTasksFromLocalStorage = () => {
     const tasksList = []
 
     for (let task of tasks) {
+        const content = task.firstChild.innerText
         const isCompleted = task.firstChild.classList.contains('complete-task')
-        const taskItem = {content: task.firstChild.innerText, isCompleted}
+        const taskItem = {content, isCompleted}
         tasksList.push(taskItem)
     }
 
