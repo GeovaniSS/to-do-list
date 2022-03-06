@@ -1,10 +1,10 @@
 <h1 align="center">To-do List</h1>
 <p align="center">Esse projeto é uma lista de tarefas criada para facilitar a organização da rotina dos usuários</p>
 <p align="center">
-    <a href="##sobre📖">Sobre</a> | <a href="##conceitos">Funcionalidades</a> | <a href="##funcionalidades⚙️">Funcionalidades</a> | <a href="##tecnologias">Tecnologias</a> | <a href="##teste">Teste</a>
+    <a href="#sobre">Sobre</a> | <a href="##conceitos">Funcionalidades</a> | <a href="##funcionalidades⚙️">Funcionalidades</a> | <a href="##tecnologias">Tecnologias</a> | <a href="##teste">Teste</a>
 </p>
 
-## Sobre📖
+# Sobre📖
 <p>Esse projeto foi desenvolvido com o intuito de praticar os conceitos básicos e necessários do JavaScript e para um primeiro contato com JSON e Local Storage.</p>
 <img src="readme.gif"></img>
 
