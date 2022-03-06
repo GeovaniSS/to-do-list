@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
 * {
@@ -13,30 +15,8 @@ body {
     background-attachment: fixed;
 }
 
-p {
-    font-size: 0.9rem;
-}
-
-/* ############ CREATE TASK ##############*/
-section#container {
-    max-width: 450px;
-    margin: 50px auto;
-}
-
-div.new-task-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    width: 100%;
-    border-radius: 12px;
-    padding: 2rem 1.5rem;
-    margin: 0 auto;
-    background-color: #fff;
-    box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.26);
-}
-
-/*---------- NEW TASK INPUT ----------*/ 
-.new-task-container > input {
+/*---------- TASK INPUT - HOME && MODAL ----------*/ 
+input[type="text"] {
     font-family: 'Poppins';
     font-size: 0.9rem;
     border: 2px solid #BABABA;
@@ -45,20 +25,12 @@ div.new-task-container {
     width: 100%;
 }
 
-.new-task-container > input:focus {
+input[type="text"]:focus {
     border: 2px solid #5593da;
 }
 
-.new-task-container > input.error {
-    border: 2px solid red;
-}
-
-.new-task-container > input.error::placeholder {
-    color: red;
-}
-
-/*---------- NEW TASK BUTTON ----------*/
-.new-task-container > button {
+/*---------- ADD TASK BUTTON - HOME && SAVE TASK EDIT - MODAL ----------*/ 
+button {
     cursor: pointer;
     font-family: 'Poppins';
     font-weight: 500;
@@ -69,12 +41,50 @@ div.new-task-container {
     padding: 0 1rem;
 }
 
-.new-task-container > button:hover {
+button:hover {
     background-color: #2972c5
 }
 
-/*---------- TASKS CONTAINER ----------*/
-.tasks-container {
+/*---------- TASK ICON CONTROLS - HOME && EXIT MODAL----------*/
+span {
+    cursor: pointer;
+    background-color: #2196F3;
+    color: #fff;
+}
+
+span:hover {
+    background-color: #2972c5;
+}
+
+/*--------------------- CONTAINER ---------------------*/
+section#container {
+    max-width: 450px;
+    margin: 50px auto;
+}
+
+/*---------- NEW TASK CONTAINER ----------*/ 
+section#container .new-task-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    background-color: #fff;
+    box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.26);
+}
+
+/*---------- INVALID NEW TASK INPUT ----------*/ 
+section#container .new-task-container > input.error {
+    border: 2px solid red;
+}
+
+section#container .new-task-container > input.error::placeholder {
+    color: red;
+}
+
+/*---------- TASKS CONTAINER ----------*/ 
+section#container .tasks-container {
     width: 100%;
     min-height: 100px;
     border-radius: 12px;
@@ -85,114 +95,86 @@ div.new-task-container {
 }
 
 /*---------- TASK ITEM CONTAINER ----------*/
-.tasks-container > .task-item-container {
+section#container .tasks-container > .task-item-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 0.5rem;
     border-bottom: 2px solid #dddada;
+    overflow: auto;
 }
 
-.task-item-container > .task-item-content {
+/*---------- TASK ITEM CONTENT ----------*/
+section#container .tasks-container .task-item-container > .task-item-content {
     display: flex;
     align-items: center;
 }
 
-.task-item-content > input {
+section#container  .tasks-container .task-item-container .task-item-content > input[type="checkbox"] {
     cursor: pointer;
     width: 20px;
     height: 20px;
     margin-right: 10px;
 }
 
-/*-------------- COMPLETE TASKS --------------*/
-.task-item-content  > label {
+/*-------------- CHECKBOX + LABEL - COMPLETE TASKS --------------*/
+section#container  .tasks-container .task-item-container .task-item-content  > label {
     cursor: pointer;
     text-decoration: none;
 }
 
-.task-item-content  > label.completed {
+section#container  .tasks-container .task-item-container .task-item-content  > label.completed {
     text-decoration: line-through;
     text-decoration-thickness: 2px;
-    text-decoration-color: #2196F3;
+    text-decoration-color: #2972c5;
 }
 
 /*---------- TASK ITEM CONTROLS ----------*/
-.task-item-controls {
+section#container .tasks-container .task-item-container > .task-item-controls {
     display: flex;
     align-items: center;
 }
 
-/*---------- DELETE ITEM ----------*/
-.task-item-controls > span {
-    cursor: pointer;
+/*---------- TASK ITEM CONTROLS ICONS ----------*/
+section#container .tasks-container .task-item-container .task-item-controls > span {
     border: 0;
     border-radius: 4px;
-    background-color: #2196F3;
-    color: #fff;
     padding: 0.2rem;
     margin-left: 5px;
 }
 
-.task-item-controls > span:hover {
-    background-color: #2972c5;
-}
 
-/*---------- EDIT TASK CONTAINER ----------*/
+/*--------------------- MODAL CONTAINER ---------------------*/
 section#modal-container {
     display: none;
 }
 
-.edit-task-modal {
+/*---------- EDIT TASK CONTAINER ----------*/
+section#modal-container .task-edit-modal {
     position: absolute; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    min-width: 300px;
-    min-height: 200px;
+    justify-content: space-evenly;
+    min-width: 350px;
+    min-height: 250px;
     padding: 1.5rem;
     border-radius: 12px;
     background-color: #fff;
 }
 
-.edit-task-modal .edit-task > label {
+section#modal-container .task-edit-modal .edit-task > label {
     font-size: 0.9rem;
 }
 
-.edit-task-modal .edit-task > input  {
-    font-family: 'Poppins';
-    font-size: 0.9rem;
-    border: 2px solid #BABABA;
-    border-radius: 4px;
+section#modal-container .task-edit-modal > button {
     padding: 0.5rem 1rem;
-    width: 100%;
 }
 
-.edit-task-modal .edit-task > input:focus {
-    border: 2px solid #5593da;
-}
-
-.edit-task-modal > button {
-    cursor: pointer;
-    font-family: 'Poppins';
-    font-weight: 500;
-    background-color: #5593da;
-    border-radius: 4px;
-    color: #fff;
-    border: 0;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-}
-
-.edit-task-modal > button:hover {
-    background-color: #4d95e9;
-}
-
-.edit-task-modal > span {
+section#modal-container .task-edit-modal > span {
     cursor: pointer;
     position: absolute;
     top: -12px;
@@ -202,13 +184,7 @@ section#modal-container {
     justify-content: center;
     width: 30px;
     height: 30px;
-    background-color: #5593da;
-    color: #fff;
     border-radius: 50%;
-}
-
-.edit-task-modal > span:hover {
-    background-color: #4f9df7;
 }
 
 @media screen and (max-width: 450px) {
@@ -220,16 +196,21 @@ section#modal-container {
         padding: 0 1.4rem;
     }
 
-    .new-task-container {
+    section#container .new-task-container {
         flex-wrap: wrap;
     }
 
-    .new-task-container > button {
+    section#container .new-task-container > button {
         width: 100%;
         padding: 0.5rem 1rem; 
     }
 
-    .new-task-container > input {
-        margin-bottom: 0.7rem;
+    section#container .new-task-container > input {
+        margin-bottom: 0.5rem;
+    }
+
+    section#modal-container .task-edit-modal {
+        min-width: 300px;
+        min-height: 200px;
     }
 }
