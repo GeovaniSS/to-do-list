@@ -1,4 +1,4 @@
-<h1 align="center">To-do List</h1>
+<h1 align="center">To-do List 📝</h1>
 <p align="center">Esse projeto é uma lista de tarefas criada para facilitar a organização da rotina dos usuários</p>
 <p align="center">
     <a href="#sobre">Sobre</a> | <a href="#conceitos">Conceitos</a> | <a href="#funcionalidades">Funcionalidades</a> | <a href="#tecnologias">Tecnologias</a> | <a href="##teste">Teste</a>
