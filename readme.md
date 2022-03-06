@@ -4,7 +4,7 @@
     <a href="#sobre">Sobre</a> | <a href="#conceitos">Conceitos</a> | <a href="#funcionalidades">Funcionalidades</a> | <a href="#tecnologias">Tecnologias</a> | <a href="#teste">Teste</a>
 </p>
 
-<h2 id="sobre">Sobre📖<h2>
+<h2 id="sobre">Sobre📖</h2>
 <p>Esse projeto foi desenvolvido com o intuito de praticar os conceitos básicos e necessários do JavaScript e para um primeiro contato com JSON e Local Storage.</p>
 <img src="readme.gif"></img>
 
