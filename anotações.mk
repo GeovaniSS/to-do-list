@@ -52,3 +52,10 @@
 		<button id="remove-task"><span class="material-icons">delete</span></button>
 	</div>
 </div>
+
+
+https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/Input/checkbox
+
+Evento de change no checkbox 
+validação com .checked que retorna true ou false
+usar label ao invés de parágrafo

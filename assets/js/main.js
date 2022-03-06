@@ -47,6 +47,8 @@ const handleAddNewTask = () => {
     updateTasksFromLocalStorage()   
 }
 
+const validateInputTask = () => inputTask.value.trim().length > 0
+
 const createTaskItemContainer = () => {
     const taskItemContainer = document.createElement('div')
     taskItemContainer.classList.add('task-item-container')
@@ -58,13 +60,13 @@ const createTaskItemContent = (taskDescription) => {
     const taskItemContent = document.createElement('div')
     taskItemContent.classList.add('task-item-content')
 
-    const taskContent = document.createElement('label')
-    taskContent.innerText = taskDescription
-    taskContent.setAttribute('for', taskDescription)
-
     const taskCheckBox = document.createElement('input')
     taskCheckBox.setAttribute('type', 'checkbox')
     taskCheckBox.setAttribute('id', taskDescription)
+
+    const taskContent = document.createElement('label')
+    taskContent.innerText = taskDescription
+    taskContent.setAttribute('for', taskDescription)
 
     taskItemContent.appendChild(taskCheckBox)
     taskItemContent.appendChild(taskContent)
@@ -95,7 +97,6 @@ const createTaskItemControls = () => {
     return taskItemControls
 }
 
-const validateInputTask = () => inputTask.value.trim().length > 0
 
 const handleInputTaskFocus = () => {
     inputTask.classList.remove('error')
@@ -117,11 +118,11 @@ const handleCompleteTask = (taskContent) => {
 }
 
 const handleEditTask = (editItem) => {
-    const taskContainer = document.querySelector('section#container')
-    const modalContainer = document.querySelector('section#modal-container')
+    const sTaskContainer = document.querySelector('section#container')
+    const sModalContainer = document.querySelector('section#modal-container')
 
-    taskContainer.style.display = 'none'
-    modalContainer.style.display = 'block'
+    sTaskContainer.style.display = 'none'
+    sModalContainer.style.display = 'block'
 
     const inputTaskEdit = document.querySelector('#input-task-edit')
     const saveTaskButton = document.querySelector('.save-task-btn')
@@ -131,41 +132,41 @@ const handleEditTask = (editItem) => {
     for (let task of tasks) {
         const taskItemContent = task.firstChild
         const taskItemControls = task.lastChild
-        const currentTaskIsBeingClicked = taskItemControls.firstChild === editItem
-        if (currentTaskIsBeingClicked) {
+        const currentTaskIsBeingEdited = taskItemControls.firstChild === editItem
+        if (currentTaskIsBeingEdited ) {
             inputTaskEdit.value = taskItemContent.lastChild.innerText
         }
     }
 
-    cancelTaskButton.addEventListener('click', () => handleCancelEditTask(taskContainer, modalContainer))
-    saveTaskButton.addEventListener('click', () => updateTaskAfterEdit(taskContainer, modalContainer, inputTaskEdit, editItem))
+    cancelTaskButton.addEventListener('click', () => handleCancelEditTask(sTaskContainer, sModalContainer))
+    saveTaskButton.addEventListener('click', () => updateTaskAfterEdit(sTaskContainer, sModalContainer, inputTaskEdit, editItem))
     inputTaskEdit.addEventListener('keypress', (e) => {
         if (e.keyCode === 13) {
-            updateTaskAfterEdit(taskContainer, modalContainer, inputTaskEdit, editItem)
+            updateTaskAfterEdit(sTaskContainer, sModalContainer, inputTaskEdit, editItem)
             return
         }
     })
 }
 
-const handleCancelEditTask = (taskContainer, modalContainer) => {
-    taskContainer.style.display = 'block'
-    modalContainer.style.display = 'none'
+const handleCancelEditTask = (sTaskContainer, sModalContainer) => {
+    sTaskContainer.style.display = 'block'
+    sModalContainer.style.display = 'none'
 }
 
-const updateTaskAfterEdit = (taskContainer, modalContainer, inputTaskEdit, editItem) => {
-    taskContainer.style.display = 'block'
-    modalContainer.style.display = 'none'
-
+const updateTaskAfterEdit = (sTaskContainer, sModalContainer, inputTaskEdit, editItem) => {
     const tasks = tasksContainer.childNodes
 
     for (let task of tasks) {
         const taskItemContent = task.firstChild
         const taskItemControls = task.lastChild
-        const currentTaskIsBeingClicked = taskItemControls.firstChild === editItem
-        if (currentTaskIsBeingClicked) {
+        const currentTaskIsBeingEdited = taskItemControls.firstChild === editItem
+        if (currentTaskIsBeingEdited) {
             taskItemContent.lastChild.innerText = inputTaskEdit.value
         }
     }
+
+    sTaskContainer.style.display = 'block'
+    sModalContainer.style.display = 'none'
 
     updateTasksFromLocalStorage()
 }
@@ -175,8 +176,8 @@ const handleDeleteTask = (deleteItem) => {
     
     for (let task of tasks) {
         const taskItemControls = task.lastChild
-        const currentTaskIsBeingClicked = taskItemControls.lastChild === deleteItem
-        if (currentTaskIsBeingClicked) {
+        const currentTaskIsBeingRemoved = taskItemControls.lastChild === deleteItem
+        if (currentTaskIsBeingRemoved) {
             tasksContainer.removeChild(task)
         }
     }
@@ -189,9 +190,9 @@ const updateTasksFromLocalStorage = () => {
     const tasksList = []
 
     for (let task of tasks) {
-        const taskItemContainer = task.firstChild
-        const content = taskItemContainer.lastChild.innerText
-        const isCompleted = taskItemContainer.firstChild.checked
+        const taskItemContent = task.firstChild
+        const content = taskItemContent.lastChild.innerText
+        const isCompleted = taskItemContent.firstChild.checked
         const taskItem = {content, isCompleted}
         tasksList.push(taskItem)
     }
