@@ -38,7 +38,6 @@
 </ul>
 
 ## Teste🔍
-<p> </p>
-<to-do-list-app-js.netlify.app>
+<p>Teste a aplicação na sua máquina <a href="to-do-list-app-js.netlify.app">clicando aqui</a>🚀</p>
 
 Feito com 💙 e ☕ por <a href="https://www.linkedin.com/in/geovani-silva-21298921b/" target="_blank">Geovani Silva</a> 
