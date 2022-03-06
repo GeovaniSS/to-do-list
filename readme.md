@@ -1,13 +1,7 @@
-# To-do List
+<h1 align="center">To-do List</h1>
 <p align="center">Esse projeto é uma lista de tarefas criada para facilitar a organização da rotina dos usuários</p>
-
 <p align="center">
-    <ul>
-        <li><a href="##sobre">Sobre</a></li>
-        <li><a href="##funcionalidades">Funcionalidades</a></li>
-        <li><a href="##tecnologias">Tecnologias</a></li>
-        <li><a href="##teste">Teste</a></li>
-    </ul>
+    <a href="##sobre">Sobre</a> | <a href="##funcionalidades">Funcionalidades</a> | <a href="##tecnologias">Tecnologias</a> | <a> href="##teste">Teste</a>
 </p>
 
 ## Sobre📖
@@ -28,12 +22,12 @@
 
 
 ## Funcionalidades⚙️
- - [x]Validação de tarefas
- - [x]Criar tarefas
- - [x]Editar tarefas
- - [x]Completar tarefas
- - [x]Remover tarefas
- - [x]Integração com o Local Storage
+ - [x] Validação de tarefas
+ - [x] Criar tarefas
+ - [x] Editar tarefas
+ - [x] Completar tarefas
+ - [x] Remover tarefas
+ - [x] Integração com o Local Storage
 
 ## Tecnologias🛠️ 
 <p>As seguintes ferramentas foram usadas no desenvolvimento do projeto:</p>
