@@ -1,7 +1,7 @@
 <h1 align="center">To-do List</h1>
 <p align="center">Esse projeto é uma lista de tarefas criada para facilitar a organização da rotina dos usuários</p>
 <p align="center">
-    <a href="##Sobre📖">Sobre</a> | <a href="##Conceitos✏️">Funcionalidades</a> | <a href="##Funcionalidades⚙️">Funcionalidades</a> | <a href="##Tecnologias🛠️">Tecnologias</a> | <a href="##Teste🔍">Teste</a>
+    <a href="##Sobre">Sobre</a> | <a href="##Conceitos✏️">Funcionalidades</a> | <a href="##Funcionalidades⚙️">Funcionalidades</a> | <a href="##Tecnologias🛠️">Tecnologias</a> | <a href="##Teste🔍">Teste</a>
 </p>
 
 ## Sobre📖
