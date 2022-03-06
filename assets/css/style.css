@@ -59,6 +59,7 @@ div.new-task-container {
 
 /*---------- NEW TASK BUTTON ----------*/
 .new-task-container > button {
+    cursor: pointer;
     font-family: 'Poppins';
     font-weight: 500;
     background-color: #2196F3;
