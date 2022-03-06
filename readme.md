@@ -1,7 +1,7 @@
 <h1 align="center">To-do List</h1>
 <p align="center">Esse projeto é uma lista de tarefas criada para facilitar a organização da rotina dos usuários</p>
 <p align="center">
-    <a href="#sobre">Sobre</a> | <a href="##conceitos">Funcionalidades</a> | <a href="##funcionalidades⚙️">Funcionalidades</a> | <a href="##tecnologias">Tecnologias</a> | <a href="##teste">Teste</a>
+    <a href="#sobre">Sobre</a> | <a href="#conceitos">Funcionalidades</a> | <a href="#funcionalidades">Funcionalidades</a> | <a href="#tecnologias">Tecnologias</a> | <a href="#teste">Teste</a>
 </p>
 
 # Sobre📖
@@ -21,7 +21,7 @@
 </ul>
 
 
-## Funcionalidades⚙️
+# Funcionalidades⚙️
  - [x] Validação de tarefas
  - [x] Criar tarefas
  - [x] Editar tarefas
@@ -29,7 +29,7 @@
  - [x] Remover tarefas
  - [x] Integração com o Local Storage
 
-## Tecnologias🛠️ 
+# Tecnologias🛠️ 
 <p>As seguintes ferramentas foram usadas no desenvolvimento do projeto:</p>
 <ul>
     <li>HTML</li>
@@ -37,7 +37,7 @@
     <li>JavaScript</li>
 </ul>
 
-## Teste🔍
+# Teste🔍
 <p>Teste a aplicação na sua máquina <a href="to-do-list-app-js.netlify.app">clicando aqui</a>🚀</p>
 
 Feito com 💙 e ☕ por <a href="https://www.linkedin.com/in/geovani-silva-21298921b/" target="_blank">Geovani Silva</a> 
