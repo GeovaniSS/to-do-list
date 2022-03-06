@@ -20,7 +20,7 @@
     <li>Modal</li>
 </ul>
 
-<h2 id="funcionalidades">Funcionalidades⚙️</h2>
+## Funcionalidades⚙️
  - [x] Validação de tarefas
  - [x] Criar tarefas
  - [x] Editar tarefas
