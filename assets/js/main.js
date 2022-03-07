@@ -1,6 +1,7 @@
 const inputTask = document.querySelector('.new-task-input')
 const addTaskButton = document.querySelector('.new-task-button')
 const tasksContainer = document.querySelector('.tasks-container')
+const editTaskInputInModal = document.querySelector('#edit-task-input')
 
 const loadTasksFromLocalStorage = () => {
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'))
@@ -8,7 +9,6 @@ const loadTasksFromLocalStorage = () => {
     if(!localStorageTasks) return
 
     for (let task of localStorageTasks) {
-        /* Criação da Div que engloba os items*/
         const taskItemContainer = createTaskItemContainer()
         const taskItemContent = createTaskItemContent(task.content)
         const taskItemControls = createTaskItemControls()
@@ -25,12 +25,14 @@ const loadTasksFromLocalStorage = () => {
 }
 
 const handleAddNewTask = () => {
-    const inputTaskIsValid = validateInputTask()
+    const inputTaskIsValid = validateInputElement(inputTask)
     
+    /*Validação do Input Tarefa*/
     if(!inputTaskIsValid){
         return inputTask.classList.add('error')
     }
 
+    /*Criação da tarefa*/
     const taskItemContainer = createTaskItemContainer()   
     const taskItemContent = createTaskItemContent(inputTask.value)
     const taskItemControls = createTaskItemControls()
@@ -47,7 +49,11 @@ const handleAddNewTask = () => {
     updateTasksFromLocalStorage()   
 }
 
-const validateInputTask = () => inputTask.value.trim().length > 0
+const validateInputElement = (input) => input.value.trim().length > 0
+
+const handleInputElementFocus = (input) => {
+    input.classList.remove('error')
+}
 
 const createTaskItemContainer = () => {
     const taskItemContainer = document.createElement('div')
@@ -97,12 +103,6 @@ const createTaskItemControls = () => {
     return taskItemControls
 }
 
-
-const handleInputTaskFocus = () => {
-    inputTask.classList.remove('error')
-    inputTask.value = ''
-}
-
 const handleCompleteTask = (taskContent) => {
     const tasks = tasksContainer.childNodes
 
@@ -118,56 +118,73 @@ const handleCompleteTask = (taskContent) => {
 }
 
 const handleEditTask = (editItem) => {
-    const sTaskContainer = document.querySelector('section#container')
-    const sModalContainer = document.querySelector('section#modal-container')
+    /*Abrindo o Modal de Editar Tarefa*/
+    handleEditTaskModal()
 
-    sTaskContainer.style.display = 'none'
-    sModalContainer.style.display = 'block'
+    /*Removendo a classe error caso o input de editar tarefa a possua */
+    editTaskInputInModal.classList.remove('error')
 
-    const inputTaskEdit = document.querySelector('#input-task-edit')
     const saveTaskButton = document.querySelector('.save-task-btn')
-    const cancelTaskButton = document.querySelector('.cancel-task-btn')
+    const cancelEditTaskButton = document.querySelector('.cancel-task-btn')
 
     const tasks = tasksContainer.childNodes
-    for (let task of tasks) {
-        const taskItemContent = task.firstChild
-        const taskItemControls = task.lastChild
-        const currentTaskIsBeingEdited = taskItemControls.firstChild === editItem
-        if (currentTaskIsBeingEdited ) {
-            inputTaskEdit.value = taskItemContent.lastChild.innerText
-        }
-    }
-
-    cancelTaskButton.addEventListener('click', () => handleCancelEditTask(sTaskContainer, sModalContainer))
-    saveTaskButton.addEventListener('click', () => updateTaskAfterEdit(sTaskContainer, sModalContainer, inputTaskEdit, editItem))
-    inputTaskEdit.addEventListener('keypress', (e) => {
-        if (e.keyCode === 13) {
-            updateTaskAfterEdit(sTaskContainer, sModalContainer, inputTaskEdit, editItem)
-            return
-        }
-    })
-}
-
-const handleCancelEditTask = (sTaskContainer, sModalContainer) => {
-    sTaskContainer.style.display = 'block'
-    sModalContainer.style.display = 'none'
-}
-
-const updateTaskAfterEdit = (sTaskContainer, sModalContainer, inputTaskEdit, editItem) => {
-    const tasks = tasksContainer.childNodes
-
     for (let task of tasks) {
         const taskItemContent = task.firstChild
         const taskItemControls = task.lastChild
         const currentTaskIsBeingEdited = taskItemControls.firstChild === editItem
         if (currentTaskIsBeingEdited) {
-            taskItemContent.lastChild.innerText = inputTaskEdit.value
+            editTaskInputInModal.value = taskItemContent.lastChild.innerText
         }
     }
 
-    sTaskContainer.style.display = 'block'
-    sModalContainer.style.display = 'none'
+    cancelEditTaskButton.onclick = () => handleEditTaskModal()
+    saveTaskButton.onclick = () => updateTaskAfterEdit(editItem)
+    editTaskInputInModal.onkeypress = (e) => {
+        if (e.keyCode === 13) {
+        updateTaskAfterEdit(editItem)
+        return
+    }}
+}
 
+const handleEditTaskModal = () => {
+    const sTaskContainer = document.querySelector('section#container')
+    const sModalContainer = document.querySelector('section#modal-container')
+    const editTaskModalIsOpened = sModalContainer.style.display === 'block'
+
+    if (!editTaskModalIsOpened) {
+        sTaskContainer.style.display = 'none'
+        sModalContainer.style.display = 'block'
+    }
+    else {
+        sTaskContainer.style.display = 'block'
+        sModalContainer.style.display = 'none'
+    }
+}
+
+const updateTaskAfterEdit = (editItem) => {
+    const editTaskInputIsValid = validateInputElement(editTaskInputInModal)
+
+    /*Validação do Input Editar Tarefa*/
+    if(!editTaskInputIsValid) {
+        return editTaskInputInModal.classList.add('error')
+    }
+
+    const tasks = tasksContainer.childNodes
+    for (let task of tasks) {
+        const taskItemContent = task.firstChild
+        const taskItemControls = task.lastChild
+        const currentTaskIsBeingEdited = taskItemControls.firstChild === editItem
+        if (currentTaskIsBeingEdited) {
+            taskItemContent.firstChild.checked = false
+            taskItemContent.lastChild.innerText = editTaskInputInModal.value
+            taskItemContent.lastChild.classList.remove('completed')
+        }
+    }
+
+    /*Fechando o Modal de Editar Tarefa*/
+    handleEditTaskModal()
+
+    /* Atualizar o conteúdo da tarefa no LocalStorage */
     updateTasksFromLocalStorage()
 }
 
@@ -202,7 +219,8 @@ const updateTasksFromLocalStorage = () => {
 
 loadTasksFromLocalStorage()
 addTaskButton.addEventListener('click', () => handleAddNewTask())
-inputTask.addEventListener('focus', () => handleInputTaskFocus())
+inputTask.addEventListener('focus', () => handleInputElementFocus(inputTask))
 inputTask.addEventListener('keypress', (e) => {
     if(e.keyCode === 13) return handleAddNewTask()
 })
+editTaskInputInModal.addEventListener('focus', () => handleInputElementFocus(editTaskInputInModal))

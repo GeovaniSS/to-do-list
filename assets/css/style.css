@@ -29,6 +29,15 @@ input[type="text"]:focus {
     border: 2px solid #5593da;
 }
 
+/*---------- INVALID TASK INPUT - HOME && MODAL ----------*/ 
+input[type="text"].error {
+    border: 2px solid red;
+}
+
+input[type="text"].error::placeholder {
+    color: red;
+}
+
 /*---------- ADD TASK BUTTON - HOME && SAVE TASK EDIT - MODAL ----------*/ 
 button {
     cursor: pointer;
@@ -72,15 +81,6 @@ section#container .new-task-container {
     padding: 2rem 1.5rem;
     background-color: #fff;
     box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.26);
-}
-
-/*---------- INVALID NEW TASK INPUT ----------*/ 
-section#container .new-task-container > input.error {
-    border: 2px solid red;
-}
-
-section#container .new-task-container > input.error::placeholder {
-    color: red;
 }
 
 /*---------- TASKS CONTAINER ----------*/ 
@@ -164,10 +164,6 @@ section#modal-container .task-edit-modal {
     padding: 1.5rem;
     border-radius: 12px;
     background-color: #fff;
-}
-
-section#modal-container .task-edit-modal .edit-task > label {
-    font-size: 0.9rem;
 }
 
 section#modal-container .task-edit-modal > button {
